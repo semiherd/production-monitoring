@@ -1,0 +1,23 @@
+{
+  "name": "smartline-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "framer-motion": "10.18.0",
+    "next": "14.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "@types/react": "19.2.2",
+    "autoprefixer": "10.4.18",
+    "postcss": "8.4.35",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.4.5"
+  }
+}

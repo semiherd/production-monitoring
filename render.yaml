@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: smartline-backend
+    env: docker
+    region: frankfurt
+    plan: free
+    autoDeploy: true
+    dockerCommand: docker compose -f docker-compose.render.yml up
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: JWT_ISSUER
+        value: https://auth.smartline.render.com
+      - key: JWT_AUDIENCE
+        value: smartline
+      - key: REDIS_URL
+        value: redis://:smartline@redis-service:6379/0
+      - key: DATABASE_URL
+        value: postgresql://postgres:postgres@postgres:5432/smartline_auth
+      - key: CORS_ALLOW_ORIGIN
+        value: https://your-vercel-frontend.vercel.app

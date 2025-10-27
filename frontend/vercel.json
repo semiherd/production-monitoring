@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds": [{ "src": "package.json", "use": "@vercel/next" }],
+  "env": {
+    "NEXT_PUBLIC_BFF_BASE_URL": "@next_public_bff_base_url"
+  },
+  "rewrites": [
+    { "source": "/bff/:path*", "destination": "https://bff.example.com/:path*" }
+  ]
+}

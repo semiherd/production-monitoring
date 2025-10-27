@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  bff-service:
+    build: ./bff-service
+    ports:
+      - "8080:8080"
+    environment:
+      AUTH_BASE_URL: http://auth-service:5001
+      EXPORT_BASE_URL: http://file-export-service:5002
+      REDIS_BASE_URL: http://redis-service:5003
+      REDIS_URL: redis://:smartline@redis-service:6379/0
+      JWT_ISSUER: https://auth.smartline.render.com
+      JWT_AUDIENCE: smartline
+      CORS_ALLOW_ORIGIN: https://your-vercel-frontend.vercel.app
+    depends_on:
+      - auth-service
+      - file-export-service
+      - redis-service
+    command: gunicorn -b 0.0.0.0:8080 app:app
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/smartline_auth
+      JWT_PRIVATE_KEY_PEM: ${JWT_PRIVATE_KEY_PEM}
+      JWT_PUBLIC_KEY_PEM: ${JWT_PUBLIC_KEY_PEM}
+      SEED_USERS: "true"
+    depends_on:
+      - postgres
+    command: gunicorn -b 0.0.0.0:5001 app:app
+
+  file-export-service:
+    build: ./file-export-service
+    ports:
+      - "5002:5002"
+    environment:
+      REDIS_URL: redis://:smartline@redis-service:6379/0
+      BROKER_URL: redis://:smartline@redis-service:6379/0
+      RESULT_BACKEND: redis://:smartline@redis-service:6379/0
+      AUTH_JWKS_URL: http://auth-service:5001/.well-known/jwks.json
+    depends_on:
+      - redis-service
+      - auth-service
+    command: gunicorn -b 0.0.0.0:5002 app:app
+
+  redis-service:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass smartline
+
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: smartline_auth
