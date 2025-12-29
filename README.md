@@ -3,7 +3,7 @@
 
 # Fullstack 
 https://production-dashboard-j97ed5qug-semiherds-projects.vercel.app/
-This repo includes following architecture:
+# This repo includes following architecture:
 
 - `frontend/` (Next.js App Router + Tailwind + Zustand hooks)
 - `bff-service/` (Flask Backend-for-Frontend, HTTPS, cookie-based auth)
