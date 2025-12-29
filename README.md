@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 # production-monitoring
 =======
-# SmartLine Fullstack v4 (Monorepo)
-
+# Fullstack 
+https://production-dashboard-j97ed5qug-semiherds-projects.vercel.app/
 This repo bundles the full stack:
 
 - `frontend/` (Next.js App Router + Tailwind + Zustand hooks)
@@ -36,13 +36,8 @@ docker compose up --build
 - Redis TCP: localhost:6379
 - Postgres: localhost:5432
 
-## Vercel deployment (frontend)
-
-- Set `NEXT_PUBLIC_BFF_BASE_URL` to your public BFF URL (e.g., `https://bff.yourdomain.com`)
-- Do **not** point to `localhost` on Vercel.
-- The `frontend/vercel.json` contains rewrites guidance if you prefer `/bff/*` in prod.
 
 ## Notes
 - The BFF generates a self-signed certificate in-container for local HTTPS.
 - All microservices validate RS256 JWTs via the `auth-service` JWKS endpoint.
->>>>>>> 438f9ec (initial commit with microservices and next frontend)
+
